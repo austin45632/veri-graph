@@ -50,6 +50,7 @@ REQUIRED_FILES = [
     'docs/decisions/decision-log.md',
     'docs/decisions/adr/ADR-0011-single-maintainer-github-governance.md',
     'docs/decisions/adr/ADR-0012-github-triage-label-taxonomy.md',
+    'docs/decisions/adr/ADR-0013-enable-github-discussions.md',
     'prototype/graph-schema.md',
     'prototype/queries.md',
     'scripts/check_all.py',
@@ -134,6 +135,7 @@ class TestProjectStructure(unittest.TestCase):
         self.assertIn('ADR-0010', log)
         self.assertIn('ADR-0011', log)
         self.assertIn('ADR-0012', log)
+        self.assertIn('ADR-0013', log)
 
     def test_adr_0011_documents_single_maintainer_governance(self):
         content = (ROOT / 'docs/decisions/adr/ADR-0011-single-maintainer-github-governance.md').read_text(encoding='utf-8')
@@ -150,6 +152,13 @@ class TestProjectStructure(unittest.TestCase):
         self.assertIn('result-layer', content)
         self.assertIn('codebeamer', content)
         self.assertIn('vteststudio', content)
+
+    def test_adr_0013_documents_discussions_enablement(self):
+        content = (ROOT / 'docs/decisions/adr/ADR-0013-enable-github-discussions.md').read_text(encoding='utf-8')
+        self.assertIn('Enable GitHub Discussions', content)
+        self.assertIn('GitHub Discussions', content)
+        self.assertIn('config.yml', content)
+        self.assertIn('architecture exploration', content)
 
     def test_traceability_script_passes_on_main_dataset(self):
         result = subprocess.run(['python', str(ROOT / 'scripts/check_traceability.py')], cwd=ROOT, capture_output=True, text=True, check=False)
