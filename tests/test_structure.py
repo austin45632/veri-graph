@@ -52,6 +52,7 @@ REQUIRED_FILES = [
     'docs/decisions/adr/ADR-0012-github-triage-label-taxonomy.md',
     'docs/decisions/adr/ADR-0013-enable-github-discussions.md',
     'docs/decisions/adr/ADR-0014-create-github-triage-project.md',
+    'docs/decisions/adr/ADR-0015-add-project-triage-fields.md',
     'prototype/graph-schema.md',
     'prototype/queries.md',
     'scripts/check_all.py',
@@ -138,6 +139,7 @@ class TestProjectStructure(unittest.TestCase):
         self.assertIn('ADR-0012', log)
         self.assertIn('ADR-0013', log)
         self.assertIn('ADR-0014', log)
+        self.assertIn('ADR-0015', log)
 
     def test_adr_0011_documents_single_maintainer_governance(self):
         content = (ROOT / 'docs/decisions/adr/ADR-0011-single-maintainer-github-governance.md').read_text(encoding='utf-8')
@@ -168,6 +170,15 @@ class TestProjectStructure(unittest.TestCase):
         self.assertIn('veri-graph Triage', content)
         self.assertIn('Project number: `2`', content)
         self.assertIn('https://github.com/users/austin45632/projects/2', content)
+
+    def test_adr_0015_documents_project_fields(self):
+        content = (ROOT / 'docs/decisions/adr/ADR-0015-add-project-triage-fields.md').read_text(encoding='utf-8')
+        self.assertIn('Add GitHub Project Triage Fields', content)
+        self.assertIn('Type', content)
+        self.assertIn('Axis', content)
+        self.assertIn('Tooling', content)
+        self.assertIn('knowledge-graph', content)
+        self.assertIn('vteststudio', content)
 
     def test_traceability_script_passes_on_main_dataset(self):
         result = subprocess.run(['python', str(ROOT / 'scripts/check_traceability.py')], cwd=ROOT, capture_output=True, text=True, check=False)
