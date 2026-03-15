@@ -15,3 +15,4 @@
 | 2026-03-15 | ADR-0011 | ????????? PR-based GitHub ????? verify ? protected branch????? approval | .github/workflows/verification-gates.yml, .github/CODEOWNERS, .github/PULL_REQUEST_TEMPLATE.md |
 | 2026-03-15 | ADR-0012 | ?? GitHub triage label taxonomy?? issue ?? type / impact axis / tooling ?? | .github/ISSUE_TEMPLATE, .github/CODEOWNERS, .github/PULL_REQUEST_TEMPLATE.md |
 | 2026-03-15 | ADR-0013 | ?? GitHub Discussions?? issue template ? discussion ?????????? | .github/ISSUE_TEMPLATE/config.yml, README.md, docs/governance/system-governance.md |
+| 2026-03-15 | ADR-0014 | ?? GitHub Project `veri-graph Triage` ?? issue / PR ??? triage ?? | GitHub Project #2, .github/ISSUE_TEMPLATE, docs/governance/system-governance.md |
