@@ -12,3 +12,4 @@
 | 2026-03-15 | ADR-0008 | 將 Variant 納入車載語意主軸，表達車型與配備適用範圍 | VAR-001, REQ-001, TC-001 |
 | 2026-03-15 | ADR-0009 | 將 Build / Evidence 納入結果層，連接測試到實際驗證結果 | BUILD-001, EVID-001, TC-001, TS-001 |
 | 2026-03-15 | ADR-0010 | 將 TestRun / Result 納入結果層，區分執行批次與結果判定 | RUN-001, RES-001, BUILD-001, TS-001 |
+| 2026-03-15 | ADR-0011 | ????????? PR-based GitHub ????? verify ? protected branch????? approval | .github/workflows/verification-gates.yml, .github/CODEOWNERS, .github/PULL_REQUEST_TEMPLATE.md |
