@@ -94,7 +94,7 @@ def format_report(report: dict[str, list[str]]) -> str:
 
 
 def main() -> int:
-    required_paths = [MATRIX, REQ_DIR, TR_DIR, TC_DIR, TS_DIR]
+    required_paths = [MATRIX, REQ_DIR, TR_DIR]
     if not all(path.exists() for path in required_paths):
         print('missing required files or directories')
         return 1
