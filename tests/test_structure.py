@@ -48,6 +48,7 @@ REQUIRED_FILES = [
     'docs/governance/system-governance.md',
     'docs/traceability/trace-matrix.md',
     'docs/decisions/decision-log.md',
+    'docs/decisions/adr/ADR-0011-single-maintainer-github-governance.md',
     'prototype/graph-schema.md',
     'prototype/queries.md',
     'scripts/check_all.py',
@@ -115,6 +116,14 @@ class TestProjectStructure(unittest.TestCase):
     def test_decision_log_includes_result_layer_adrs(self):
         log = (ROOT / 'docs/decisions/decision-log.md').read_text(encoding='utf-8')
         self.assertIn('ADR-0010', log)
+        self.assertIn('ADR-0011', log)
+
+    def test_adr_0011_documents_single_maintainer_governance(self):
+        content = (ROOT / 'docs/decisions/adr/ADR-0011-single-maintainer-github-governance.md').read_text(encoding='utf-8')
+        self.assertIn('Single-Maintainer GitHub Governance', content)
+        self.assertIn('verify', content)
+        self.assertIn('required_conversation_resolution=true', content)
+        self.assertIn('???? `required_approving_review_count >= 1`', content)
 
     def test_traceability_script_passes_on_main_dataset(self):
         result = subprocess.run(['python', str(ROOT / 'scripts/check_traceability.py')], cwd=ROOT, capture_output=True, text=True, check=False)
