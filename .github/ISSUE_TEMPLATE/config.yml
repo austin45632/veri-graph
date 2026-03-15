@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Architecture Discussion
+    url: https://github.com/austin45632/veri-graph/discussions
+    about: Use Discussions for open-ended architecture or process exploration before opening an issue.
