@@ -51,6 +51,8 @@ REQUIRED_FILES = [
     'prototype/graph-schema.md',
     'prototype/queries.md',
     'scripts/check_all.py',
+    '.github/CODEOWNERS',
+    '.github/PULL_REQUEST_TEMPLATE.md',
 ]
 
 
@@ -83,6 +85,14 @@ class TestProjectStructure(unittest.TestCase):
         self.assertIn("python -m unittest discover -s tests -p 'test_*.py' -v", content)
         self.assertIn('python scripts/check_all.py', content)
         self.assertIn('actions/setup-python@v5', content)
+
+    def test_review_files_exist_with_expected_content(self):
+        codeowners = (ROOT / '.github/CODEOWNERS').read_text(encoding='utf-8')
+        pr_template = (ROOT / '.github/PULL_REQUEST_TEMPLATE.md').read_text(encoding='utf-8')
+        self.assertIn('* @austin45632', codeowners)
+        self.assertIn('/docs/governance/ @austin45632', codeowners)
+        self.assertIn('## Traceability Impact', pr_template)
+        self.assertIn(r'python scripts\check_all.py', pr_template)
 
     def test_result_samples_exist_and_link_to_main_chain(self):
         run = (ROOT / 'docs/results/RUN-001.md').read_text(encoding='utf-8')
