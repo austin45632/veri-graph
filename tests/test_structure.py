@@ -51,6 +51,7 @@ REQUIRED_FILES = [
     'docs/decisions/adr/ADR-0011-single-maintainer-github-governance.md',
     'docs/decisions/adr/ADR-0012-github-triage-label-taxonomy.md',
     'docs/decisions/adr/ADR-0013-enable-github-discussions.md',
+    'docs/decisions/adr/ADR-0014-create-github-triage-project.md',
     'prototype/graph-schema.md',
     'prototype/queries.md',
     'scripts/check_all.py',
@@ -136,6 +137,7 @@ class TestProjectStructure(unittest.TestCase):
         self.assertIn('ADR-0011', log)
         self.assertIn('ADR-0012', log)
         self.assertIn('ADR-0013', log)
+        self.assertIn('ADR-0014', log)
 
     def test_adr_0011_documents_single_maintainer_governance(self):
         content = (ROOT / 'docs/decisions/adr/ADR-0011-single-maintainer-github-governance.md').read_text(encoding='utf-8')
@@ -159,6 +161,13 @@ class TestProjectStructure(unittest.TestCase):
         self.assertIn('GitHub Discussions', content)
         self.assertIn('config.yml', content)
         self.assertIn('architecture exploration', content)
+
+    def test_adr_0014_documents_triage_project(self):
+        content = (ROOT / 'docs/decisions/adr/ADR-0014-create-github-triage-project.md').read_text(encoding='utf-8')
+        self.assertIn('Create GitHub Triage Project', content)
+        self.assertIn('veri-graph Triage', content)
+        self.assertIn('Project number: `2`', content)
+        self.assertIn('https://github.com/users/austin45632/projects/2', content)
 
     def test_traceability_script_passes_on_main_dataset(self):
         result = subprocess.run(['python', str(ROOT / 'scripts/check_traceability.py')], cwd=ROOT, capture_output=True, text=True, check=False)
