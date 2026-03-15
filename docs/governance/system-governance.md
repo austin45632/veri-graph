@@ -113,3 +113,17 @@
   用於文件結構、樣例、fixture 與腳本行為的回歸驗證
 - GitHub Actions `verification-gates`
   用於在 push / pull request 時自動執行 unittest 與 `check_all.py`
+
+
+## Issue Triage Labels
+
+- Type labels: `bug`, `governance`, `knowledge-graph`
+- Axis labels: `verification-axis`, `automotive-semantics`, `result-layer`
+- Tooling labels: `ci`, `codebeamer`, `vteststudio`
+
+Triage ???
+
+1. ?? issue ???? 1 ? type label?
+2. ???????????????? 1 ? axis label?
+3. ???????? GitHub ??????? 1 ? tooling/process label?
+4. `knowledge_graph_change` ? issue ????? `knowledge-graph`?
