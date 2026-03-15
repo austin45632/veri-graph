@@ -1,8 +1,19 @@
-# Codebeamer Configuration
+﻿# Codebeamer Configuration
 
 ## Purpose
 
-定義 `veri-graph` 在 Codebeamer 中的最小可落地配置，涵蓋 `REQ`、`TR`、`TC` 三種 tracker 與 `TI` 母節點規則，讓 repo 內模型能對應到實際工具設定。
+This document defines the formal Codebeamer configuration boundary for veri-graph.
+
+## Scope Boundary
+
+The following concepts stay outside Codebeamer formal trackers:
+
+- raw `SPEC` ingestion
+- `SpecFragment`
+- `CandidateRequirement`
+- candidate review workflow before requirement approval
+
+Those concepts remain in the repository and knowledge-graph layer. Only approved requirements are admitted into Codebeamer as formal `REQ-*` items.
 
 ## Tracker Layout
 
@@ -12,6 +23,12 @@
 | `TR-*` | Test requirement tracker item | ID, Title, Status, Owner, Verification Rule, Coverage Status, Source Requirement | One source `REQ-*`, optional one or more `TI-*`, at least one `TC-*` via `verified_by` |
 | `TI-*` | Scenario intent node carried by the test case hierarchy | Name, Description | Groups related `TC-*` items under one `TR-*` |
 | `TC-*` | Test case tracker item | ID, Title, Status, Owner, Automation Status, vTESTstudio ID | One source `TR-*`, one source `TI-*`, optional one or more `TS-*` |
+
+## Requirement Admission Rule
+
+- only `CandidateRequirement.review_status=approved` may be promoted to a formal `REQ-*`
+- `rejected`, `needs_split`, and `needs_merge` candidates remain outside Codebeamer
+- Codebeamer stores only formal approved requirements
 
 ## Field Guidance
 
@@ -26,6 +43,11 @@ Required fields:
 
 Required relation:
 - `validated_by` to at least one `TR-*`
+
+Recommended provenance fields:
+- `Source Spec ID`
+- `Source Anchor`
+- `Candidate Requirement ID`
 
 ### Test requirement tracker
 
@@ -55,9 +77,9 @@ Minimum fields:
 - `Description`
 
 Semantics:
-- graph 中的 `TI-*` 是正式 scenario intent node
-- Codebeamer 中由 test case hierarchy 的母節點承載
-- 不需要獨立 workflow
+- graph-level `TI-*` is a scenario intent node
+- Codebeamer carries it through the test case hierarchy
+- no independent tracker workflow is required
 
 ### Test case tracker
 
@@ -82,25 +104,25 @@ Required relations:
 
 ## TI Parent Node Rules
 
-- `TI` 不建立獨立 tracker。
-- 每個 `TI` 以 test case hierarchy 內母節點表達，例如 `TI_Speed_Normal`。
-- 每個 `TI` 母節點至少需要 `Name` 與 `Description`。
-- `TC-*` 必須掛在一個 `TI` 母節點下，除非明確標示為暫時未分類。
-- `TI` 母節點名稱應能表達測試設計意圖，而不是只用模糊分類名稱。
+- `TI` is not an independent tracker
+- each `TI` acts as a hierarchy parent node such as `TI_Speed_Normal`
+- each `TI` should provide a `Name` and `Description`
+- `TC-*` items should be grouped under an appropriate `TI`
+- `TI` exists to preserve scenario intent without adding workflow overhead
 
 ## TI Naming Convention
 
-- 格式：`TI_<Domain>_<Intent>`
-- `Domain` 使用功能或訊號域，例如 `Speed`、`Brake`、`CAN`
-- `Intent` 使用測試意圖，例如 `Normal`、`Boundary`、`Timeout`
-- 不在 `TI` 名稱中放數值、步驟細節或 testcase 編號
-- 同一個 `TR-*` 底下的 `TI` 名稱必須唯一
+- format: `TI_<Domain>_<Intent>`
+- `Domain` should be a functional or signal domain such as `Speed`, `Brake`, or `CAN`
+- `Intent` should describe the scenario type such as `Normal`, `Boundary`, or `Timeout`
+- do not encode testcase numbers or step details in the `TI` name
+- names must be unique under the same `TR-*`
 
 ## Traceability Rules
 
-1. 每個 `REQ-*` 至少一個 `TR-*`。
-2. 每個 `TR-*` 至少一個 `TC-*`。
-3. 若採用 scenario 分群，`TR-*` 應至少有一個 `TI-*`。
-4. 每個 `TC-*` 應有 `Automation Status`。
-5. `Automation Status=automated` 的 `TC-*` 必須有 `vTESTstudio ID`。
-6. repo 中的 `trace-matrix.md` 只反映 `REQ -> TR -> TC -> TS` 審查視圖，不作為主資料源。
+1. every normative `REQ-*` must have at least one `TR-*`
+2. every `TR-*` must have at least one `TC-*`
+3. when scenario grouping is used, each `TR-*` should organize its `TC-*` through one or more `TI-*`
+4. every `TC-*` must declare `Automation Status`
+5. every `TC-*` with `Automation Status=automated` must carry a `vTESTstudio ID`
+6. repo matrices remain review views; the formal minimum gate is still `REQ -> TR -> TC -> TS`

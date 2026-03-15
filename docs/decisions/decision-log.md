@@ -1,19 +1,20 @@
-# Decision Log
+﻿# Decision Log
 
 | date | decision_id | summary | impacted_ids |
 |---|---|---|---|
-| 2026-03-15 | ADR-0001 | 採用 Markdown-first + NetworkX 原型策略 | SPEC-001, REQ-001, TR-001, TI-001, TC-001, TS-001 |
-| 2026-03-15 | ADR-0002 | 正式追溯鏈路收斂為 SPEC-REQ-TC-TS，並對齊 Codebeamer 與 vTESTstudio | SPEC-001, REQ-001, TC-001, TS-001 |
-| 2026-03-15 | ADR-0003 | 將 TR 升格為 Codebeamer tracker，正式追溯鏈路改為 SPEC-REQ-TR-TC-TS | SPEC-001, REQ-001, TR-001, TI-001, TC-001, TS-001 |
-| 2026-03-15 | ADR-0004 | 將 TI 調整為 Codebeamer test case hierarchy 的母節點，而非資料夾 | TI-001, TC-001 |
-| 2026-03-15 | ADR-0005 | 將 TI 納入 knowledge graph 正式節點，形成 SPEC-REQ-TR-TI-TC-TS 結構 | TI-001, TC-001, TS-001 |
-| 2026-03-15 | ADR-0006 | 車載儀表系統採用雙主軸 knowledge graph，新增車載語意節點族群 | FEAT-001, VSTATE-001, SIG-001, FAULT-001, SG-001 |
-| 2026-03-15 | ADR-0007 | 將 DiagnosticEvent 納入車載語意主軸，區分診斷事件與故障反應 | DIAG-001, FAULT-001, TC-001 |
-| 2026-03-15 | ADR-0008 | 將 Variant 納入車載語意主軸，表達車型與配備適用範圍 | VAR-001, REQ-001, TC-001 |
-| 2026-03-15 | ADR-0009 | 將 Build / Evidence 納入結果層，連接測試到實際驗證結果 | BUILD-001, EVID-001, TC-001, TS-001 |
-| 2026-03-15 | ADR-0010 | 將 TestRun / Result 納入結果層，區分執行批次與結果判定 | RUN-001, RES-001, BUILD-001, TS-001 |
-| 2026-03-15 | ADR-0011 | ????????? PR-based GitHub ????? verify ? protected branch????? approval | .github/workflows/verification-gates.yml, .github/CODEOWNERS, .github/PULL_REQUEST_TEMPLATE.md |
-| 2026-03-15 | ADR-0012 | ?? GitHub triage label taxonomy?? issue ?? type / impact axis / tooling ?? | .github/ISSUE_TEMPLATE, .github/CODEOWNERS, .github/PULL_REQUEST_TEMPLATE.md |
-| 2026-03-15 | ADR-0013 | ?? GitHub Discussions?? issue template ? discussion ?????????? | .github/ISSUE_TEMPLATE/config.yml, README.md, docs/governance/system-governance.md |
-| 2026-03-15 | ADR-0014 | ?? GitHub Project `veri-graph Triage` ?? issue / PR ??? triage ?? | GitHub Project #2, .github/ISSUE_TEMPLATE, docs/governance/system-governance.md |
-| 2026-03-15 | ADR-0015 | ? GitHub Project ?? Type / Axis / Tooling triage ?????? repository | GitHub Project #2, labels, issue templates |
+| 2026-03-15 | ADR-0001 | Adopt a Markdown-first plus NetworkX prototype strategy | SPEC-001, REQ-001, TR-001, TI-001, TC-001, TS-001 |
+| 2026-03-15 | ADR-0002 | Collapse the formal traceability chain to SPEC-REQ-TC-TS and align with Codebeamer and vTESTstudio | SPEC-001, REQ-001, TC-001, TS-001 |
+| 2026-03-15 | ADR-0003 | Promote TR into a Codebeamer tracker and change the formal chain to SPEC-REQ-TR-TC-TS | SPEC-001, REQ-001, TR-001, TI-001, TC-001, TS-001 |
+| 2026-03-15 | ADR-0004 | Recast TI as a Codebeamer test case hierarchy parent node instead of a folder | TI-001, TC-001 |
+| 2026-03-15 | ADR-0005 | Add TI as a formal knowledge graph node and establish the SPEC-REQ-TR-TI-TC-TS structure | TI-001, TC-001, TS-001 |
+| 2026-03-15 | ADR-0006 | Adopt a dual-axis automotive knowledge graph with automotive semantics nodes | FEAT-001, VSTATE-001, SIG-001, FAULT-001, SG-001 |
+| 2026-03-15 | ADR-0007 | Add DiagnosticEvent to the automotive semantics axis and separate diagnostic events from fault reactions | DIAG-001, FAULT-001, TC-001 |
+| 2026-03-15 | ADR-0008 | Add Variant to the automotive semantics axis to express applicability by vehicle or equipment | VAR-001, REQ-001, TC-001 |
+| 2026-03-15 | ADR-0009 | Add Build and Evidence to the result layer and connect tests to executed artifacts | BUILD-001, EVID-001, TC-001, TS-001 |
+| 2026-03-15 | ADR-0010 | Add TestRun and Result to the result layer and separate execution batches from outcomes | RUN-001, RES-001, BUILD-001, TS-001 |
+| 2026-03-15 | ADR-0011 | Use PR-based GitHub governance for a single-maintainer repository while keeping verify and branch protection enabled | .github/workflows/verification-gates.yml, .github/CODEOWNERS, .github/PULL_REQUEST_TEMPLATE.md |
+| 2026-03-15 | ADR-0012 | Define a GitHub triage label taxonomy across type, impact axis, and tooling dimensions | .github/ISSUE_TEMPLATE, .github/CODEOWNERS, .github/PULL_REQUEST_TEMPLATE.md |
+| 2026-03-15 | ADR-0013 | Enable GitHub Discussions as the entry point for open-ended architecture and process exploration | .github/ISSUE_TEMPLATE/config.yml, README.md, docs/governance/system-governance.md |
+| 2026-03-15 | ADR-0014 | Create the GitHub Project `veri-graph Triage` as the central triage workspace | GitHub Project #2, .github/ISSUE_TEMPLATE, docs/governance/system-governance.md |
+| 2026-03-15 | ADR-0015 | Add Type, Axis, and Tooling triage fields to the GitHub Project and align them with labels | GitHub Project #2, labels, issue templates |
+| 2026-03-15 | ADR-0016 | Establish `SPEC -> SpecFragment -> CandidateRequirement -> Human Review -> REQ` pipeline, separating candidate requirements from formal requirements | SPEC-001, S6867-07-blocked, REQ-001 |

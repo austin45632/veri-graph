@@ -3,6 +3,8 @@
 ## Node Types
 
 - Spec (`SPEC-*`)
+- SpecFragment
+- CandidateRequirement (`CANDREQ-*`)
 - Requirement (`REQ-*`)
 - TestRequirement (`TR-*`)
 - TestIntent (`TI-*`)
@@ -22,6 +24,10 @@
 
 ## Node Semantics
 
+- `SpecFragment` is an ingestion node produced from a `SPEC` document
+- `SpecFragment` may represent a `paragraph`, `clause`, or `table_row`
+- `CandidateRequirement` is an automatically extracted candidate, not a formal `REQ`
+- `CandidateRequirement` must survive re-runs with a stable ID
 - `TR-*` carries requirement intent
 - `TI-*` carries scenario intent
 - `TI-*` is a graph node even if Codebeamer carries it through a hierarchy parent node
@@ -30,7 +36,9 @@
 
 ## Edge Types
 
-- `derived_from`
+- `contains_fragment`
+- `yields_candidate`
+- `approved_as`
 - `validated_by`
 - `organized_by`
 - `specified_by`
@@ -51,6 +59,9 @@
 
 ## Edge Meanings
 
+- `SPEC -> SpecFragment` uses `contains_fragment`
+- `SpecFragment -> CandidateRequirement` uses `yields_candidate`
+- `CandidateRequirement -> REQ` uses `approved_as`
 - `REQ -> TR` uses `validated_by`
 - `TR -> TI` uses `organized_by`
 - `TI -> TC` uses `specified_by`
@@ -72,4 +83,12 @@
 ## Minimum Required Properties
 
 - node: `id`, `type`, `status`, `version`
+- `SpecFragment`: `source_spec_id`, `fragment_type`, `source_anchor`, `source_text`
+- `CandidateRequirement`: `candidate_id`, `source_spec_id`, `source_anchor`, `normalized_statement`, `modality`, `confidence`, `risk_level`, `review_status`
 - edge: `relation`, `status`, `last_reviewed_at`
+
+## Risk Rules For CandidateRequirement
+
+- default `risk_level` is driven by `confidence`
+- if a candidate involves `safety`, regulatory obligation, `warning/telltale`, `fault reaction`, or `diagnostic behavior`, it must be promoted to `high risk` regardless of confidence
+- `CandidateRequirement` must not enter the formal traceability chain until `review_status=approved`
