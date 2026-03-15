@@ -1,6 +1,5 @@
-from pathlib import Path
+﻿from pathlib import Path
 import os
-import re
 import subprocess
 import unittest
 
@@ -53,6 +52,7 @@ REQUIRED_FILES = [
     'docs/decisions/adr/ADR-0013-enable-github-discussions.md',
     'docs/decisions/adr/ADR-0014-create-github-triage-project.md',
     'docs/decisions/adr/ADR-0015-add-project-triage-fields.md',
+    'docs/decisions/adr/ADR-0016-spec-to-candidate-req-pipeline.md',
     'prototype/graph-schema.md',
     'prototype/queries.md',
     'scripts/check_all.py',
@@ -81,13 +81,17 @@ class TestProjectStructure(unittest.TestCase):
 
     def test_model_mapping_mentions_result_layer(self):
         content = (ROOT / 'docs/architecture/model-mapping.md').read_text(encoding='utf-8')
+        self.assertIn('| `SpecFragment` | Yes | Yes in graph | Knowledge graph / Repo |', content)
+        self.assertIn('| `CandidateRequirement` | Yes | Yes | Knowledge graph / Repo |', content)
         self.assertIn('| `TestRun` | Yes | Yes | Result layer |', content)
         self.assertIn('| `Result` | Yes | Yes | Result layer |', content)
 
-    def test_readme_mentions_check_all(self):
+    def test_readme_mentions_check_all_and_candidate_pipeline(self):
         content = (ROOT / 'README.md').read_text(encoding='utf-8')
         self.assertIn('python scripts\\check_all.py', content)
         self.assertIn('`check_all.py`', content)
+        self.assertIn('`SPEC -> SpecFragment -> CandidateRequirement -> Human Review -> REQ`', content)
+        self.assertIn('S6867-07-blocked.md', content)
 
     def test_ci_workflow_exists_and_runs_verification_gates(self):
         content = (ROOT / '.github/workflows/verification-gates.yml').read_text(encoding='utf-8')
@@ -123,14 +127,18 @@ class TestProjectStructure(unittest.TestCase):
     def test_prototype_docs_match_extended_schema(self):
         schema = (ROOT / 'prototype/graph-schema.md').read_text(encoding='utf-8')
         queries = (ROOT / 'prototype/queries.md').read_text(encoding='utf-8')
+        self.assertIn('SpecFragment', schema)
+        self.assertIn('CandidateRequirement (`CANDREQ-*`)', schema)
         self.assertIn('TestRun (`RUN-*`)', schema)
         self.assertIn('Result (`RES-*`)', schema)
-        self.assertIn('查詢某個 `Run-*` 產生了哪些 `Result-*`', queries)
+        self.assertIn('Find every `CandidateRequirement` with `review_status=pending`.', queries)
+        self.assertIn('Find every `Run-*` and the `Result-*` nodes it produced.', queries)
 
     def test_governance_doc_mentions_all_layers(self):
         content = (ROOT / 'docs/governance/system-governance.md').read_text(encoding='utf-8')
+        self.assertIn('`CandidateRequirement` | Knowledge graph / Repo | Maintain candidate extraction, confidence, risk, and review status |', content)
         self.assertIn('`python scripts\\check_all.py`', content)
-        self.assertIn('`TC -> BUILD`、`TS -> RUN`、`RUN -> RES`、`TS -> EVID`、`EVID -> BUILD` 是否正確', content)
+        self.assertIn('`TC -> BUILD`, `TS -> RUN`, `RUN -> RES`, `TS -> EVID`, and `EVID -> BUILD` are correct', content)
 
     def test_decision_log_includes_result_layer_adrs(self):
         log = (ROOT / 'docs/decisions/decision-log.md').read_text(encoding='utf-8')
@@ -140,13 +148,14 @@ class TestProjectStructure(unittest.TestCase):
         self.assertIn('ADR-0013', log)
         self.assertIn('ADR-0014', log)
         self.assertIn('ADR-0015', log)
+        self.assertIn('ADR-0016', log)
 
     def test_adr_0011_documents_single_maintainer_governance(self):
         content = (ROOT / 'docs/decisions/adr/ADR-0011-single-maintainer-github-governance.md').read_text(encoding='utf-8')
         self.assertIn('Single-Maintainer GitHub Governance', content)
         self.assertIn('verify', content)
         self.assertIn('required_conversation_resolution=true', content)
-        self.assertIn('???? `required_approving_review_count >= 1`', content)
+        self.assertIn('do not require `required_approving_review_count >= 1`', content)
 
     def test_adr_0012_documents_label_taxonomy(self):
         content = (ROOT / 'docs/decisions/adr/ADR-0012-github-triage-label-taxonomy.md').read_text(encoding='utf-8')
@@ -179,6 +188,15 @@ class TestProjectStructure(unittest.TestCase):
         self.assertIn('Tooling', content)
         self.assertIn('knowledge-graph', content)
         self.assertIn('vteststudio', content)
+
+    def test_adr_0016_documents_spec_to_candidate_pipeline(self):
+        content = (ROOT / 'docs/decisions/adr/ADR-0016-spec-to-candidate-req-pipeline.md').read_text(encoding='utf-8')
+        self.assertIn('SPEC to Candidate Requirement Pipeline', content)
+        self.assertIn('SpecFragment', content)
+        self.assertIn('CandidateRequirement', content)
+        self.assertIn('confidence', content)
+        self.assertIn('high risk', content)
+        self.assertIn('S6867-07-blocked.md', content)
 
     def test_traceability_script_passes_on_main_dataset(self):
         result = subprocess.run(['python', str(ROOT / 'scripts/check_traceability.py')], cwd=ROOT, capture_output=True, text=True, check=False)
