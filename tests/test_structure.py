@@ -54,6 +54,10 @@ REQUIRED_FILES = [
     'scripts/check_all.py',
     '.github/CODEOWNERS',
     '.github/PULL_REQUEST_TEMPLATE.md',
+    '.github/ISSUE_TEMPLATE/bug_report.md',
+    '.github/ISSUE_TEMPLATE/governance_change.md',
+    '.github/ISSUE_TEMPLATE/knowledge_graph_change.md',
+    '.github/ISSUE_TEMPLATE/config.yml',
 ]
 
 
@@ -94,6 +98,16 @@ class TestProjectStructure(unittest.TestCase):
         self.assertIn('/docs/governance/ @austin45632', codeowners)
         self.assertIn('## Traceability Impact', pr_template)
         self.assertIn(r'python scripts\check_all.py', pr_template)
+
+    def test_issue_templates_exist_with_expected_sections(self):
+        bug = (ROOT / '.github/ISSUE_TEMPLATE/bug_report.md').read_text(encoding='utf-8')
+        governance = (ROOT / '.github/ISSUE_TEMPLATE/governance_change.md').read_text(encoding='utf-8')
+        graph = (ROOT / '.github/ISSUE_TEMPLATE/knowledge_graph_change.md').read_text(encoding='utf-8')
+        config = (ROOT / '.github/ISSUE_TEMPLATE/config.yml').read_text(encoding='utf-8')
+        self.assertIn('## Steps To Reproduce', bug)
+        self.assertIn('## Proposed Change', governance)
+        self.assertIn('## Proposed Graph Change', graph)
+        self.assertIn('blank_issues_enabled: false', config)
 
     def test_result_samples_exist_and_link_to_main_chain(self):
         run = (ROOT / 'docs/results/RUN-001.md').read_text(encoding='utf-8')
