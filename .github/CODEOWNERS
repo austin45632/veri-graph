@@ -1,0 +1,10 @@
+# Default owner for repository-wide review routing
+* @austin45632
+
+# Governance and architecture must be reviewed with extra care
+/docs/architecture/ @austin45632
+/docs/governance/ @austin45632
+/docs/decisions/ @austin45632
+/.github/ @austin45632
+/scripts/ @austin45632
+/tests/ @austin45632
