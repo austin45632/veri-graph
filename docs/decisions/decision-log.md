@@ -14,3 +14,4 @@
 | 2026-03-15 | ADR-0010 | 將 TestRun / Result 納入結果層，區分執行批次與結果判定 | RUN-001, RES-001, BUILD-001, TS-001 |
 | 2026-03-15 | ADR-0011 | ????????? PR-based GitHub ????? verify ? protected branch????? approval | .github/workflows/verification-gates.yml, .github/CODEOWNERS, .github/PULL_REQUEST_TEMPLATE.md |
 | 2026-03-15 | ADR-0012 | ?? GitHub triage label taxonomy?? issue ?? type / impact axis / tooling ?? | .github/ISSUE_TEMPLATE, .github/CODEOWNERS, .github/PULL_REQUEST_TEMPLATE.md |
+| 2026-03-15 | ADR-0013 | ?? GitHub Discussions?? issue template ? discussion ?????????? | .github/ISSUE_TEMPLATE/config.yml, README.md, docs/governance/system-governance.md |
