@@ -1,7 +1,7 @@
 ---
 name: Knowledge graph change
 about: Propose new nodes, edges, semantics, or matrix rules for the verification knowledge graph
-labels: enhancement
+labels: enhancement, knowledge-graph
 ---
 
 ## Summary
